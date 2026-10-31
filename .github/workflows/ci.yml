@@ -1,0 +1,21 @@
+name: Prototype CI
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install
+        run: npm install
+      - name: Rules tests
+        run: npm run test
+      - name: Typecheck and production build
+        run: npm run build
